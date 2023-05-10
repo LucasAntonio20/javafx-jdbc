@@ -1,5 +1,6 @@
 package com.lucasantonio.projetobd;
 
+import com.lucasantonio.projetobd.db.DB;
 import com.lucasantonio.projetobd.model.services.CustomerService;
 import com.lucasantonio.projetobd.util.Alerts;
 import javafx.fxml.FXML;
@@ -28,6 +29,10 @@ public class MainController implements Initializable {
 
     @FXML
     public void onMenuIemCustomersAction(){
+        //DB.getConnection();
+        //DB.closeConnection();
+        //DB.connect();
+        //DB.close();
         loadView("CustomersList.fxml", (CustomersListController controller) -> {
             controller.setCustomerService(new CustomerService());
             controller.updateTableView();
