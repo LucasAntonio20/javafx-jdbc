@@ -1,4 +1,4 @@
-package com.lucasantonio.projetobd.models.entities;
+package com.lucasantonio.projetobd.model.entities;
 
 public class Customer {
 
@@ -13,6 +13,9 @@ public class Customer {
     private String Country;
     private String Phone;
     private String Fax;
+
+    public Customer() {
+    }
 
     public Customer(String customerID, String companyName, String contactName, String contactTitle, String address, String city, String region, String postalCode, String country, String phone, String fax) {
         this.customerID = customerID;
