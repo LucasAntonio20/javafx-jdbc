@@ -1,6 +1,8 @@
 module com.lucasantonio.projetobd {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
+    requires com.microsoft.sqlserver.jdbc;
 
 
     opens com.lucasantonio.projetobd to javafx.fxml;
