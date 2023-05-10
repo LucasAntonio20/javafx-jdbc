@@ -27,7 +27,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void onMenuIemCustomersAction(){
-        System.out.println("onMenuIemCustomersAction");
+        loadView("CustomersList.fxml");
     }
 
     @FXML
