@@ -2,7 +2,7 @@ package com.lucasantonio.projetobd.models;
 
 public class Customer {
 
-    private String CustomerID;
+    private String customerID;
     private String CompanyName;
     private String ContactName;
     private String ContactTitle;
@@ -14,12 +14,26 @@ public class Customer {
     private String Phone;
     private String Fax;
 
+    public Customer(String customerID, String companyName, String contactName, String contactTitle, String address, String city, String region, String postalCode, String country, String phone, String fax) {
+        this.customerID = customerID;
+        CompanyName = companyName;
+        ContactName = contactName;
+        ContactTitle = contactTitle;
+        Address = address;
+        City = city;
+        Region = region;
+        PostalCode = postalCode;
+        Country = country;
+        Phone = phone;
+        Fax = fax;
+    }
+
     public String getCustomerID() {
-        return CustomerID;
+        return customerID;
     }
 
     public void setCustomerID(String customerID) {
-        CustomerID = customerID;
+        this.customerID = customerID;
     }
 
     public String getCompanyName() {
@@ -111,10 +125,10 @@ public class Customer {
         if (getClass() != obj.getClass())
             return false;
         Customer other = (Customer) obj;
-        if (CustomerID == null) {
-            if (other.CustomerID != null)
+        if (customerID == null) {
+            if (other.customerID != null)
                 return false;
-        } else if (!CustomerID.equals(other.CustomerID))
+        } else if (!customerID.equals(other.customerID))
             return false;
         return true;
     }
@@ -122,7 +136,7 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "CustomerID='" + CustomerID + '\'' +
+                "CustomerID='" + customerID + '\'' +
                 ", ContactName='" + ContactName + '\'' +
                 '}';
     }

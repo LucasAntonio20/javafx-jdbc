@@ -1,5 +1,6 @@
 package com.lucasantonio.projetobd;
 
+import com.lucasantonio.projetobd.models.services.CustomerService;
 import com.lucasantonio.projetobd.util.Alerts;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +28,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void onMenuIemCustomersAction(){
-        loadView("CustomersList.fxml");
+        loadView2("CustomersList.fxml");
     }
 
     @FXML
@@ -52,6 +53,28 @@ public class MainController implements Initializable {
             mainVbox.getChildren().clear();
             mainVbox.getChildren().add(mainMenu);
             mainVbox.getChildren().addAll(newVbox.getChildren());
+
+        } catch (IOException e) {
+            Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    private synchronized void loadView2(String absoluteName) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+            VBox newVbox = loader.load();
+
+            Scene mainScene = Main.getMainScene();
+            VBox mainVbox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+
+            Node mainMenu = mainVbox.getChildren().get(0);
+            mainVbox.getChildren().clear();
+            mainVbox.getChildren().add(mainMenu);
+            mainVbox.getChildren().addAll(newVbox.getChildren());
+
+            CustomersListController controller = loader.getController();
+            controller.setCustomerService(new CustomerService());
+            controller.updateTableView();
 
         } catch (IOException e) {
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
