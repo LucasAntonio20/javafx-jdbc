@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CustomerService {
 
-    private CustomerDao dao = DaoFactory.createCustomerDao();
+    //private CustomerDao dao = DaoFactory.createCustomerDao();
 
     public List<Customer> findAll(){
 
