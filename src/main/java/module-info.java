@@ -4,6 +4,7 @@ module com.lucasantonio.projetobd {
 
 
     opens com.lucasantonio.projetobd to javafx.fxml;
-    opens com.lucasantonio.projetobd.models to javafx.base;
+    opens com.lucasantonio.projetobd.models.entities to javafx.base;
     exports com.lucasantonio.projetobd;
+
 }

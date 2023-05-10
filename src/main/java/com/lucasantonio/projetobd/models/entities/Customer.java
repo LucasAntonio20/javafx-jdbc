@@ -1,4 +1,4 @@
-package com.lucasantonio.projetobd.models;
+package com.lucasantonio.projetobd.models.entities;
 
 public class Customer {
 

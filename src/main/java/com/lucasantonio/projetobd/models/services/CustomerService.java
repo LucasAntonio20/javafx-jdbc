@@ -1,6 +1,6 @@
 package com.lucasantonio.projetobd.models.services;
 
-import com.lucasantonio.projetobd.models.Customer;
+import com.lucasantonio.projetobd.models.entities.Customer;
 
 import java.util.ArrayList;
 import java.util.List;

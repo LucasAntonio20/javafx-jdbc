@@ -1,6 +1,6 @@
 package com.lucasantonio.projetobd;
 
-import com.lucasantonio.projetobd.models.Customer;
+import com.lucasantonio.projetobd.models.entities.Customer;
 import com.lucasantonio.projetobd.models.services.CustomerService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
