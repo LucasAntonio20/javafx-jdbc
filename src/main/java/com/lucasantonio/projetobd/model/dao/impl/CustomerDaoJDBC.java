@@ -151,13 +151,12 @@ public class CustomerDaoJDBC implements CustomerDao {
 
 	@Override
 	public void deleteById(String id) {
-        /*
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-				"DELETE FROM department WHERE Id = ?");
+				"DELETE FROM Customers WHERE CustomerID = ?");
 
-			st.setInt(1, id);
+			st.setString(1, id);
 
 			st.executeUpdate();
 		}
@@ -167,6 +166,5 @@ public class CustomerDaoJDBC implements CustomerDao {
 		finally {
 			DB.closeStatement(st);
 		}
-		*/
 	}
 }

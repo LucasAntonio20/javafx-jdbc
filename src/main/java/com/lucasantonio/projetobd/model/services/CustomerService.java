@@ -20,4 +20,8 @@ public class CustomerService {
         if (dao.findById(obj.getCustomerID()) == null) dao.insert(obj);
         else dao.update(obj);
     }
+
+    public void remove(Customer obj) {
+        dao.deleteById(obj.getCustomerID());
+    }
 }

@@ -1,5 +1,6 @@
 package com.lucasantonio.projetobd;
 
+import com.lucasantonio.projetobd.db.DbIntegrityException;
 import com.lucasantonio.projetobd.listeners.DataChangeListener;
 import com.lucasantonio.projetobd.model.entities.Customer;
 import com.lucasantonio.projetobd.model.services.CustomerService;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Optional;
 
 public class CustomersListController implements Initializable, DataChangeListener {
 
@@ -55,6 +57,8 @@ public class CustomersListController implements Initializable, DataChangeListene
     private TableColumn<Customer, String> tableColumnFax;
     @FXML
     private TableColumn<Customer, Customer> tableColumnEDIT;
+    @FXML
+    TableColumn<Customer, Customer> tableColumnREMOVE;
     @FXML
     private Button btnNew;
     private ObservableList<Customer> obsList;
@@ -98,6 +102,7 @@ public class CustomersListController implements Initializable, DataChangeListene
         obsList = FXCollections.observableArrayList(list);
         tableViewCustomer.setItems(obsList);
         initEditButtons();
+        initRemoveButtons();
     }
 
     private void createDialogForm(Customer obj, String absoluteName, Stage parentStage){
@@ -146,6 +151,39 @@ public class CustomersListController implements Initializable, DataChangeListene
                                 obj, "CustomerForm.fxml",Utils.currentStage(event)));
             }
         });
+    }
+
+    private void initRemoveButtons() {
+        tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+        tableColumnREMOVE.setCellFactory(param -> new TableCell<Customer, Customer>() {
+            private final Button button = new Button("remove");
+            @Override
+            protected void updateItem(Customer obj, boolean empty) {
+                super.updateItem(obj, empty);
+                if (obj == null) {
+                    setGraphic(null);
+                    return;
+                }
+                setGraphic(button);
+                button.setOnAction(event -> removeEntity(obj));
+            }
+        });
+    }
+
+    private void removeEntity(Customer obj) {
+        Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
+
+        if (result.get() ==  ButtonType.OK) {
+            if (service == null) throw new IllegalStateException("Service was null");
+
+            try {
+                service.remove(obj);
+                updateTableView();
+            } catch (DbIntegrityException e) {
+                Alerts.showAlert("Error removing object", null, e.getMessage(), Alert.AlertType.ERROR);
+            }
+
+        }
     }
 
 }
