@@ -8,7 +8,7 @@ public interface CustomerDao {
 
 	void insert(Customer obj);
 	void update(Customer obj);
-	void deleteById(Integer id);
-	Customer findById(Integer id);
+	void deleteById(String id);
+	Customer findById(String id);
 	List<Customer> findAll();
 }

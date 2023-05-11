@@ -43,7 +43,7 @@
             <Label text="Country" GridPane.rowIndex="8" />
             <Label text="Phone" GridPane.rowIndex="9" />
             <Label text="Fax" GridPane.rowIndex="10" />
-            <TextField fx:id="txtCustomerID" editable="false" GridPane.columnIndex="1" />
+            <TextField fx:id="txtCustomerID" GridPane.columnIndex="1" />
             <TextField fx:id="txtCompanyName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="txtContactName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="txtContactTitle" GridPane.columnIndex="1" GridPane.rowIndex="3" />

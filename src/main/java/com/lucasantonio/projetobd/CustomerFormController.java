@@ -1,9 +1,15 @@
 package com.lucasantonio.projetobd;
 
+import com.lucasantonio.projetobd.db.DbException;
 import com.lucasantonio.projetobd.model.entities.Customer;
+import com.lucasantonio.projetobd.model.services.CustomerService;
+import com.lucasantonio.projetobd.util.Alerts;
 import com.lucasantonio.projetobd.util.Constraints;
+import com.lucasantonio.projetobd.util.Utils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -14,6 +20,8 @@ import java.util.ResourceBundle;
 public class CustomerFormController implements Initializable {
 
     private Customer entity;
+
+    private CustomerService service;
 
     @FXML
     private TextField txtCustomerID;
@@ -48,14 +56,44 @@ public class CustomerFormController implements Initializable {
         this.entity = entity;
     }
 
-    @FXML
-    public void onBtnSaveAction() {
-        System.out.println("Salvei");
+    public void setCustomerService(CustomerService service){
+        this.service = service;
     }
 
     @FXML
-    public void onBtnCancelAction() {
-        System.out.println("Cancelei");
+    public void onBtnSaveAction(ActionEvent event) {
+        if (entity == null) throw new IllegalStateException("Entity was null");
+        if (service == null) throw new IllegalStateException("Service was null");
+
+        try {
+            entity = getFormData();
+            service.saveOrUpdate(entity);
+            Utils.currentStage(event).close();
+        } catch (DbException e) {
+            Alerts.showAlert("Error saving object", null, e.getMessage(), Alert.AlertType.ERROR);
+        }
+
+    }
+
+    private Customer getFormData() {
+        Customer obj = new Customer();
+        obj.setCustomerID(txtCustomerID.getText());
+        obj.setCompanyName(txtCompanyName.getText());
+        obj.setContactName(txtContactName.getText());
+        obj.setContactTitle(txtContactTitle.getText());
+        obj.setAddress(txtAddress.getText());
+        obj.setCity(txtCity.getText());
+        obj.setRegion(txtRegion.getText());
+        obj.setPostalCode(txtPostalCode.getText());
+        obj.setCountry(txtCountry.getText());
+        obj.setPhone(txtPhone.getText());
+        obj.setFax(txtFax.getText());
+        return obj;
+    }
+
+    @FXML
+    public void onBtnCancelAction(ActionEvent event) {
+        Utils.currentStage(event).close();
     }
 
     @Override

@@ -105,6 +105,7 @@ public class CustomersListController implements Initializable {
 
             CustomerFormController controller = loader.getController();
             controller.setCustomer(obj);
+            controller.setCustomerService(new CustomerService());
             controller.updateFormData();
 
             Stage dialogStage = new Stage();

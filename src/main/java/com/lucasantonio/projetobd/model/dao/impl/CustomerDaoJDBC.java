@@ -15,25 +15,23 @@ import com.lucasantonio.projetobd.db.*;
 public class CustomerDaoJDBC implements CustomerDao {
 
 	private Connection conn;
-	
+
 	public CustomerDaoJDBC(Connection conn) {
 		this.conn = conn;
 	}
 
 	@Override
-	public Customer findById(Integer id) {
+	public Customer findById(String id) {
 
-		/*
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-				"SELECT * FROM department WHERE Id = ?");
-			st.setInt(1, id);
+				"SELECT * FROM Customers WHERE CustomerID = ?");
+			st.setString(1, id);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Customer obj = new Customer();
-				return obj;
+				return new Customer();
 			}
 			return null;
 		}
@@ -43,8 +41,7 @@ public class CustomerDaoJDBC implements CustomerDao {
 		finally {
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
-		}*/
-		return new Customer();
+		}
 	}
 
 	@Override
@@ -53,7 +50,7 @@ public class CustomerDaoJDBC implements CustomerDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-				"SELECT * FROM Customers ORDER BY CustomerID");
+					"SELECT * FROM Customers ORDER BY CustomerID");
 			rs = st.executeQuery();
 
 			List<Customer> list = new ArrayList<>();
@@ -74,11 +71,9 @@ public class CustomerDaoJDBC implements CustomerDao {
 				list.add(obj);
 			}
 			return list;
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		}
-		finally {
+		} finally {
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 		}
@@ -92,66 +87,71 @@ public class CustomerDaoJDBC implements CustomerDao {
             "INSERT INTO Customers (CustomerID, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Country, Phone, Fax) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-			st.setString(1, "ALFKI");
-   			st.setString(2, "Alfreds Futterkiste");
-    		st.setString(3, "Maria Anders");
-    		st.setString(4, "Sales Representative");
-    		st.setString(5, "Obere Str. 57");
-    		st.setString(6, "Berlin");
-    		st.setString(7, null);
-    		st.setString(8, "12209");
-    		st.setString(9, "Germany");
-    		st.setString(10, "030-0074321");
-    		st.setString(11, "030-0076545");
+			st.setString(1, customer.getCustomerID());
+			st.setString(2, customer.getCompanyName());
+			st.setString(3, customer.getContactName());
+			st.setString(4, customer.getContactTitle());
+			st.setString(5, customer.getAddress());
+			st.setString(6, customer.getCity());
+			st.setString(7, customer.getRegion());
+			st.setString(8, customer.getPostalCode());
+			st.setString(9, customer.getCountry());
+			st.setString(10, customer.getPhone());
+			st.setString(11, customer.getFax());
 
 
 			int rowsAffected = st.executeUpdate();
-			
-			if (rowsAffected > 0) {
-				ResultSet rs = st.getGeneratedKeys();
-				if (rs.next()) {
-					int id = rs.getInt(1);
-					customer.setCustomerID(String.valueOf(id));
-				}
-			}
-			else {
-				throw new DbException("Unexpected error! No rows affected!");
-			}
-		}
-		catch (SQLException e) {
+
+			if (rowsAffected <= 0) throw new DbException("Unexpected error! No rows affected!");
+
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		} 
-		finally {
+		} finally {
 			DB.closeStatement(st);
 		}
 	}
 
 	@Override
-	public void update(Customer obj) {
-		/*
+	public void update(Customer customer) {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-				"UPDATE department " +
-				"SET Name = ? " +
-				"WHERE Id = ?");
+					"UPDATE Customers " +
+							"SET CompanyName = ? ," +
+							"ContactName = ? ," +
+							"ContactTitle = ? ," +
+							"Address = ? ," +
+							"City = ? ," +
+							"Region = ? ," +
+							"PostalCode = ? ," +
+							"Country = ? ," +
+							"Phone = ? ," +
+							"Fax = ? " +
+							"WHERE CustomerID = ?");
 
-			st.setString(1, obj.getName());
-			st.setInt(2, obj.getId());
+			st.setString(1, customer.getCompanyName());
+			st.setString(2, customer.getContactName());
+			st.setString(3, customer.getContactTitle());
+			st.setString(4, customer.getAddress());
+			st.setString(5, customer.getCity());
+			st.setString(6, customer.getRegion());
+			st.setString(7, customer.getPostalCode());
+			st.setString(8, customer.getCountry());
+			st.setString(9, customer.getPhone());
+			st.setString(10, customer.getFax());
+			st.setString(11, customer.getCustomerID());
 
 			st.executeUpdate();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		} 
-		finally {
+		} finally {
 			DB.closeStatement(st);
-		}*/
+		}
 	}
 
 	@Override
-	public void deleteById(Integer id) {
-		/*
+	public void deleteById(String id) {
+        /*
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
