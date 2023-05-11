@@ -1,6 +1,7 @@
 package com.lucasantonio.projetobd;
 
 import com.lucasantonio.projetobd.db.DbException;
+import com.lucasantonio.projetobd.listeners.DataChangeListener;
 import com.lucasantonio.projetobd.model.entities.Customer;
 import com.lucasantonio.projetobd.model.services.CustomerService;
 import com.lucasantonio.projetobd.util.Alerts;
@@ -15,6 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class CustomerFormController implements Initializable {
@@ -22,6 +25,8 @@ public class CustomerFormController implements Initializable {
     private Customer entity;
 
     private CustomerService service;
+
+    private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
     @FXML
     private TextField txtCustomerID;
@@ -60,6 +65,10 @@ public class CustomerFormController implements Initializable {
         this.service = service;
     }
 
+    public void subscribeDataChangeListener(DataChangeListener listener) {
+        dataChangeListeners.add(listener);
+    }
+
     @FXML
     public void onBtnSaveAction(ActionEvent event) {
         if (entity == null) throw new IllegalStateException("Entity was null");
@@ -68,11 +77,18 @@ public class CustomerFormController implements Initializable {
         try {
             entity = getFormData();
             service.saveOrUpdate(entity);
+            notifyDataChangeListener();
             Utils.currentStage(event).close();
         } catch (DbException e) {
             Alerts.showAlert("Error saving object", null, e.getMessage(), Alert.AlertType.ERROR);
         }
 
+    }
+
+    private void notifyDataChangeListener() {
+        for (DataChangeListener listerner: dataChangeListeners) {
+            listerner.onDataChanged();
+        }
     }
 
     private Customer getFormData() {

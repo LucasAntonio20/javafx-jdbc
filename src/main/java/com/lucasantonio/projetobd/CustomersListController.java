@@ -1,5 +1,6 @@
 package com.lucasantonio.projetobd;
 
+import com.lucasantonio.projetobd.listeners.DataChangeListener;
 import com.lucasantonio.projetobd.model.entities.Customer;
 import com.lucasantonio.projetobd.model.services.CustomerService;
 import com.lucasantonio.projetobd.util.Alerts;
@@ -25,7 +26,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class CustomersListController implements Initializable {
+public class CustomersListController implements Initializable, DataChangeListener {
 
     private CustomerService service;
 
@@ -106,6 +107,7 @@ public class CustomersListController implements Initializable {
             CustomerFormController controller = loader.getController();
             controller.setCustomer(obj);
             controller.setCustomerService(new CustomerService());
+            controller.subscribeDataChangeListener(this);
             controller.updateFormData();
 
             Stage dialogStage = new Stage();
@@ -119,5 +121,10 @@ public class CustomersListController implements Initializable {
         } catch (IOException e) {
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    @Override
+    public void onDataChanged() {
+        updateTableView();
     }
 }
