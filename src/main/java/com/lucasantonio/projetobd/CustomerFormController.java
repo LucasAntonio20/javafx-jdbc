@@ -3,6 +3,7 @@ package com.lucasantonio.projetobd;
 import com.lucasantonio.projetobd.db.DbException;
 import com.lucasantonio.projetobd.listeners.DataChangeListener;
 import com.lucasantonio.projetobd.model.entities.Customer;
+import com.lucasantonio.projetobd.model.exceptions.ValidationException;
 import com.lucasantonio.projetobd.model.services.CustomerService;
 import com.lucasantonio.projetobd.util.Alerts;
 import com.lucasantonio.projetobd.util.Constraints;
@@ -16,9 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class CustomerFormController implements Initializable {
 
@@ -79,7 +78,10 @@ public class CustomerFormController implements Initializable {
             service.saveOrUpdate(entity);
             notifyDataChangeListener();
             Utils.currentStage(event).close();
-        } catch (DbException e) {
+        } catch (ValidationException e)  {
+            setErrorMessages(e.getErros());
+        }
+        catch (DbException e) {
             Alerts.showAlert("Error saving object", null, e.getMessage(), Alert.AlertType.ERROR);
         }
 
@@ -93,7 +95,15 @@ public class CustomerFormController implements Initializable {
 
     private Customer getFormData() {
         Customer obj = new Customer();
+
+        ValidationException exception = new ValidationException("Validation error");
+
         obj.setCustomerID(txtCustomerID.getText());
+
+        if (txtCompanyName.getText() == null || txtCompanyName.getText().trim().equals("")) {
+            exception.addError("CompanyName", "Field can't be empty");
+        }
+
         obj.setCompanyName(txtCompanyName.getText());
         obj.setContactName(txtContactName.getText());
         obj.setContactTitle(txtContactTitle.getText());
@@ -104,6 +114,8 @@ public class CustomerFormController implements Initializable {
         obj.setCountry(txtCountry.getText());
         obj.setPhone(txtPhone.getText());
         obj.setFax(txtFax.getText());
+
+        if (exception.getErros().size() > 0) throw exception;
         return obj;
     }
 
@@ -144,5 +156,13 @@ public class CustomerFormController implements Initializable {
         txtCountry.setText(entity.getCountry());
         txtPhone.setText(entity.getPhone());
         txtFax.setText(entity.getFax());
+    }
+
+    private void setErrorMessages(Map<String, String> errors){
+        Set<String> fields = errors.keySet();
+
+        if (fields.contains("CompanyName")){
+            labelErrorName.setText(errors.get("CompanyName"));
+        }
     }
 }
