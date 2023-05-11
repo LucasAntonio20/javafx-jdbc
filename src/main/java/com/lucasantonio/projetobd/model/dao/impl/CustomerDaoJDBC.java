@@ -49,20 +49,28 @@ public class CustomerDaoJDBC implements CustomerDao {
 
 	@Override
 	public List<Customer> findAll() {
-		/*
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-				"SELECT * FROM department ORDER BY Name");
+				"SELECT * FROM Customers ORDER BY CustomerID");
 			rs = st.executeQuery();
 
 			List<Customer> list = new ArrayList<>();
 
 			while (rs.next()) {
-				Customer obj = new Customer(EmployeeID);
-				obj.setId(rs.getString("Id"));
-				obj.setName(rs.getString("Name"));
+				Customer obj = new Customer();
+				obj.setCustomerID(rs.getString("CustomerID"));
+				obj.setCompanyName(rs.getString("CompanyName"));
+				obj.setContactName(rs.getString("ContactName"));
+				obj.setContactTitle(rs.getString("ContactTitle"));
+				obj.setAddress(rs.getString("Address"));
+				obj.setCity(rs.getString("City"));
+				obj.setRegion(rs.getString("Region"));
+				obj.setPostalCode(rs.getString("PostalCode"));
+				obj.setCountry(rs.getString("Country"));
+				obj.setPhone(rs.getString("Phone"));
+				obj.setFax(rs.getString("Fax"));
 				list.add(obj);
 			}
 			return list;
@@ -74,17 +82,6 @@ public class CustomerDaoJDBC implements CustomerDao {
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 		}
-
-		 */
-
-		List<Customer> list = new ArrayList<>();
-
-		list.add(new Customer("1", "Celpe", "Pedro", "Pedrin", "Rua 23", "Olinda", "Sul", "80522", "Brasil", "80028922", "357689"));
-		list.add(new Customer("2", "Compesa", "Ana", "Aninha", "Rua 67", "Recife", "Norte", "82222", "Brasil", "80028922", "357689"));
-		list.add(new Customer("3", "Compesa", "Joao", "ze", "Rua 106", "Olinda", "Norte", "80452", "Brasil", "80028922", "357689"));
-		list.add(new Customer("4", "Celpe", "Diego", "didi", "Rua 2", "Paulista", "Norte", "42122", "Brasil", "80028922", "357689"));
-
-		return list;
 	}
 
 	@Override

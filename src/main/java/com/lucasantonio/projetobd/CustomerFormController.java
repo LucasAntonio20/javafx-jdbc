@@ -1,5 +1,6 @@
 package com.lucasantonio.projetobd;
 
+import com.lucasantonio.projetobd.model.entities.Customer;
 import com.lucasantonio.projetobd.util.Constraints;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,6 +12,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CustomerFormController implements Initializable {
+
+    private Customer entity;
 
     @FXML
     private TextField txtCustomerID;
@@ -41,6 +44,10 @@ public class CustomerFormController implements Initializable {
     @FXML
     private Button btnCancel;
 
+    public void setCustomer(Customer entity){
+        this.entity = entity;
+    }
+
     @FXML
     public void onBtnSaveAction() {
         System.out.println("Salvei");
@@ -68,5 +75,20 @@ public class CustomerFormController implements Initializable {
         Constraints.setTextFieldMaxLength(txtCountry, 15);
         Constraints.setTextFieldMaxLength(txtPhone, 24);
         Constraints.setTextFieldMaxLength(txtFax, 24);
+    }
+
+    public void updateFormData() {
+        if (entity == null) throw new IllegalStateException("Entity was null");
+        txtCustomerID.setText(entity.getCustomerID());
+        txtCompanyName.setText(entity.getCompanyName());
+        txtContactName.setText(entity.getContactName());
+        txtContactTitle.setText(entity.getContactTitle());
+        txtAddress.setText(entity.getAddress());
+        txtCity.setText(entity.getCity());
+        txtRegion.setText(entity.getRegion());
+        txtPostalCode.setText(entity.getPostalCode());
+        txtCountry.setText(entity.getCountry());
+        txtPhone.setText(entity.getPhone());
+        txtFax.setText(entity.getFax());
     }
 }

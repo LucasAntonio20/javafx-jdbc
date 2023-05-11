@@ -12,6 +12,7 @@ import java.util.Properties;
 public class DB {
 
 	//DESKTOP-959S46T\SQLEXPRESS:
+	//conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-959S46T\SQLEXPRESS;encrypt=true;databaseName=Northwind;user=admin;password=1234");
 	//jdbc:sqlserver://DESKTOP-959S46T\SQLEXPRESS;encrypt=true;databaseName=Northwind;user=admin;password=1234;
 	private static final String URL = "jdbc:sqlserver://DESKTOP-959S46T\\SQLEXPRESS:1433;encrypt=false;databaseName=Northwind";
 	private static final String USER = "admin";
