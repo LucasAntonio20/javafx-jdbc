@@ -88,18 +88,25 @@ public class CustomerDaoJDBC implements CustomerDao {
 	}
 
 	@Override
-	public void insert(Customer obj) {
-		/*
+	public void insert(Customer customer) {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-				"INSERT INTO department " +
-				"(Name) " +
-				"VALUES " +
-				"(?)", 
-				Statement.RETURN_GENERATED_KEYS);
+            "INSERT INTO Customers (CustomerID, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Country, Phone, Fax) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-			st.setString(1, obj.getName());
+			st.setString(1, "ALFKI");
+   			st.setString(2, "Alfreds Futterkiste");
+    		st.setString(3, "Maria Anders");
+    		st.setString(4, "Sales Representative");
+    		st.setString(5, "Obere Str. 57");
+    		st.setString(6, "Berlin");
+    		st.setString(7, null);
+    		st.setString(8, "12209");
+    		st.setString(9, "Germany");
+    		st.setString(10, "030-0074321");
+    		st.setString(11, "030-0076545");
+
 
 			int rowsAffected = st.executeUpdate();
 			
@@ -107,7 +114,7 @@ public class CustomerDaoJDBC implements CustomerDao {
 				ResultSet rs = st.getGeneratedKeys();
 				if (rs.next()) {
 					int id = rs.getInt(1);
-					obj.setId(id);
+					customer.setCustomerID(String.valueOf(id));
 				}
 			}
 			else {
@@ -119,7 +126,7 @@ public class CustomerDaoJDBC implements CustomerDao {
 		} 
 		finally {
 			DB.closeStatement(st);
-		}*/
+		}
 	}
 
 	@Override
