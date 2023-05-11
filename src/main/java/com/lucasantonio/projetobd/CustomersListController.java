@@ -5,6 +5,7 @@ import com.lucasantonio.projetobd.model.entities.Customer;
 import com.lucasantonio.projetobd.model.services.CustomerService;
 import com.lucasantonio.projetobd.util.Alerts;
 import com.lucasantonio.projetobd.util.Utils;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,10 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -55,6 +53,8 @@ public class CustomersListController implements Initializable, DataChangeListene
     private TableColumn<Customer, String> tableColumnPhone;
     @FXML
     private TableColumn<Customer, String> tableColumnFax;
+    @FXML
+    private TableColumn<Customer, Customer> tableColumnEDIT;
     @FXML
     private Button btnNew;
     private ObservableList<Customer> obsList;
@@ -97,6 +97,7 @@ public class CustomersListController implements Initializable, DataChangeListene
         List<Customer>  list = service.findAll();
         obsList = FXCollections.observableArrayList(list);
         tableViewCustomer.setItems(obsList);
+        initEditButtons();
     }
 
     private void createDialogForm(Customer obj, String absoluteName, Stage parentStage){
@@ -127,4 +128,24 @@ public class CustomersListController implements Initializable, DataChangeListene
     public void onDataChanged() {
         updateTableView();
     }
+
+    private void initEditButtons() {
+        tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+        tableColumnEDIT.setCellFactory(param -> new TableCell<Customer, Customer>() {
+            private final Button button = new Button("edit");
+            @Override
+            protected void updateItem(Customer obj, boolean empty) {
+                super.updateItem(obj, empty);
+                if (obj == null) {
+                    setGraphic(null);
+                    return;
+                }
+                setGraphic(button);
+                button.setOnAction(
+                        event -> createDialogForm(
+                                obj, "CustomerForm.fxml",Utils.currentStage(event)));
+            }
+        });
+    }
+
 }

@@ -37,6 +37,7 @@
             <TableColumn fx:id="tableColumnCountry" prefWidth="70.0" text="Country" />
             <TableColumn fx:id="tableColumnPhone" prefWidth="70.0" text="Phone" />
             <TableColumn fx:id="tableColumnFax" prefWidth="65.0" text="Fax" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="75.0" />
         </columns>
       </TableView>
    </children>
