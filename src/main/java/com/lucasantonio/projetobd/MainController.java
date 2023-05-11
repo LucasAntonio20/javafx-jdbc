@@ -2,6 +2,7 @@ package com.lucasantonio.projetobd;
 
 import com.lucasantonio.projetobd.db.DB;
 import com.lucasantonio.projetobd.model.services.CustomerService;
+import com.lucasantonio.projetobd.model.services.OrderService;
 import com.lucasantonio.projetobd.util.Alerts;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,10 +30,6 @@ public class MainController implements Initializable {
 
     @FXML
     public void onMenuIemCustomersAction(){
-        //DB.getConnection();
-        //DB.closeConnection();
-        //DB.connect();
-        //DB.close();
         loadView("CustomersList.fxml", (CustomersListController controller) -> {
             controller.setCustomerService(new CustomerService());
             controller.updateTableView();
@@ -41,7 +38,10 @@ public class MainController implements Initializable {
 
     @FXML
     public void onMenuItemOrdersAction(){
-        System.out.println("onMenuItemOrdersAction");
+        loadView("OrderList.fxml", (OrderListController controller) -> {
+            controller.setOrderService(new OrderService());
+            controller.updateTableView();
+        });
     }
 
     @FXML

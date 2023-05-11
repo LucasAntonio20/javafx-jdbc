@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1001.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lucasantonio.projetobd.OrderListController">
+   <children>
+      <Label text="Orders Registration">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <padding>
+            <Insets left="5.0" top="5.0" />
+         </padding>
+      </Label>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+         <items>
+            <Button fx:id="btnNew" mnemonicParsing="false" text="New" />
+         </items>
+      </ToolBar>
+      <TableView fx:id="tableViewOrder" prefHeight="200.0" prefWidth="790.0">
+         <columns>
+            <TableColumn fx:id="tableColumnOrderID" prefWidth="65.0" text="Order ID" />
+            <TableColumn fx:id="tableColumnCustomerID" prefWidth="75.0" text="Customer ID" />
+            <TableColumn fx:id="tableColumnEmployeeID" prefWidth="85.0" text="Employee ID" />
+            <TableColumn fx:id="tableColumnOrderDate" prefWidth="77.0" text="Order Date" />
+            <TableColumn fx:id="tableColumnRequiredDate" prefWidth="98.0" text="Required Date" />
+            <TableColumn fx:id="tableColumnShippedDate" prefWidth="87.0" text="Shipped Date" />
+            <TableColumn fx:id="tableColumnShipVia" prefWidth="51.0" text="Ship Via" />
+            <TableColumn fx:id="tableColumnFreight" prefWidth="52.0" text="Freight" />
+            <TableColumn fx:id="tableColumnShipName" prefWidth="70.0" text="Ship Name" />
+            <TableColumn fx:id="tableColumnShipAddress" text="Ship Address" />
+            <TableColumn fx:id="tableColumnShipCity" prefWidth="55.0" text="Ship City" />
+            <TableColumn fx:id="tableColumnShipRegion" prefWidth="75.0" text="Ship Region" />
+            <TableColumn fx:id="tableColumnShipPostalCode" prefWidth="105.0" text="Ship Postal Code" />
+            <TableColumn fx:id="tableColumnShipCountry" prefWidth="75.0" text="Ship Country" />
+         </columns>
+      </TableView>
+   </children>
+</VBox>
