@@ -1,6 +1,6 @@
 package com.lucasantonio.projetobd.model.entities;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Order {
 

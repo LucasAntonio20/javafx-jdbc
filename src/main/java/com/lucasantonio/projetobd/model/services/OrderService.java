@@ -13,4 +13,8 @@ public class OrderService {
     public List<Order> findAll(){
         return dao.findAll();
     }
+
+    public void save(Order obj) {
+        dao.insert(obj);
+    }
 }

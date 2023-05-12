@@ -1,26 +1,34 @@
 package com.lucasantonio.projetobd;
 
+import com.lucasantonio.projetobd.listeners.DataChangeListener;
 import com.lucasantonio.projetobd.model.entities.Customer;
 import com.lucasantonio.projetobd.model.entities.Order;
 import com.lucasantonio.projetobd.model.services.CustomerService;
 import com.lucasantonio.projetobd.model.services.OrderService;
+import com.lucasantonio.projetobd.util.Alerts;
 import com.lucasantonio.projetobd.util.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class OrderListController implements Initializable {
+public class OrderListController implements Initializable, DataChangeListener {
 
     private OrderService service;
 
@@ -62,7 +70,9 @@ public class OrderListController implements Initializable {
 
     @FXML
     public void onBtnNewAction(ActionEvent event) {
-        System.out.println("onBtnNewAction");
+        Stage parentStage = Utils.currentStage(event);
+        Order obj = new Order();
+        createDialogForm(obj, "OrderForm.fxml", parentStage);
     }
 
     public void setOrderService(OrderService service) {
@@ -99,5 +109,33 @@ public class OrderListController implements Initializable {
         List<Order>  list = service.findAll();
         obsList = FXCollections.observableArrayList(list);
         tableViewOrder.setItems(obsList);
+    }
+
+    private void createDialogForm(Order obj, String absoluteName, Stage parentStage){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+            Pane pane = loader.load();
+
+            OrderFormController controller = loader.getController();
+            controller.setOrder(obj);
+            controller.setOrderService(new OrderService());
+            controller.subscribeDataChangeListener(this);
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Enter Order data");
+            dialogStage.setScene(new Scene(pane));
+            dialogStage.setResizable(false);
+            dialogStage.initOwner(parentStage);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    @Override
+    public void onDataChanged() {
+        updateTableView();
     }
 }
