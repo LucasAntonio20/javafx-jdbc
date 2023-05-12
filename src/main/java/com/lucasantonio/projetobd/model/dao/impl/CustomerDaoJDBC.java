@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -165,6 +164,34 @@ public class CustomerDaoJDBC implements CustomerDao {
 		} 
 		finally {
 			DB.closeStatement(st);
+		}
+	}
+
+	@Override
+	public List<Customer> getByCountry(String country) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"EXEC BuscaClientePorPais ?");
+			st.setString(1, country);
+
+			rs = st.executeQuery();
+
+			List<Customer> list = new ArrayList<>();
+
+			while (rs.next()) {
+				Customer obj = new Customer();
+				obj.setCustomerID(rs.getString("CustomerID"));
+				obj.setCompanyName(rs.getString("CompanyName"));
+				list.add(obj);
+			}
+			return list;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
 		}
 	}
 }

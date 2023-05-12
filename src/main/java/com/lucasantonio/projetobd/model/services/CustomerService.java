@@ -24,4 +24,8 @@ public class CustomerService {
     public void remove(Customer obj) {
         dao.deleteById(obj.getCustomerID());
     }
+
+    public List<Customer> getByCountry(String country) {
+        return dao.getByCountry(country);
+    }
 }

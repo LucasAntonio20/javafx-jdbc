@@ -11,4 +11,5 @@ public interface CustomerDao {
 	void deleteById(String id);
 	Customer findById(String id);
 	List<Customer> findAll();
+	List<Customer> getByCountry(String country);
 }
